@@ -19,7 +19,9 @@ const razorpay = new Razorpay({
 	key_secret: 'FSeQ9DnuMhtFnQzQCFBaPxbH'
 })
 
-
+app.get("/", (req, res) => {
+	res.send("Xcitedu foundations backend is working.")
+})
 app.post('/verification', (req, res) => {
 	// do a validation
 	const secret = '12345678'
