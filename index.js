@@ -1,6 +1,5 @@
 const express=require("express")
 const app = require('express')()
-const path = require('path')
 const shortid = require('shortid')
 const Razorpay = require('razorpay')
 const cors = require('cors')
@@ -8,6 +7,7 @@ const bodyParser = require('body-parser')
 const dotenv = require("dotenv")
 const mongoose = require('mongoose')
 const formRoutes = require("./routes/formRoutes")
+const monetaryformData = require("./models/monetaryformData")
 
 dotenv.config()
 app.use(cors())
@@ -45,10 +45,13 @@ app.post('/verification', (req, res) => {
 })
 
 app.post('/razorpay', async (req, res) => {
+	console.log("BODY::::::",req.body);
 	const payment_capture = 1
-	const amount = 2000
 	const currency = 'INR'
-
+	
+	const submitedData = await monetaryformData.find({email:req.body.email})
+	
+	const amount = submitedData[0].amount
 	const options = {
 		amount: amount * 100,
 		currency,
@@ -58,7 +61,7 @@ app.post('/razorpay', async (req, res) => {
 
 	try {
 		const response = await razorpay.orders.create(options)
-		console.log(response)
+		// console.log(response)
 		res.json({
 			id: response.id,
 			currency: response.currency,
