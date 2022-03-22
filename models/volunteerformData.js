@@ -1,4 +1,4 @@
-const mongoose= require("mongoose");
+const mongoose = require("mongoose");
 
 const volunteerformDataSchema = new mongoose.Schema(
     {
@@ -8,6 +8,7 @@ const volunteerformDataSchema = new mongoose.Schema(
         city: { type: String, required: true },
         state: { type: String, required: true },
         zip: { type: Number, required: true },
+        status: { type: String, required: true, default: "Pending" },
     },
     { timestamps: true }
 );
